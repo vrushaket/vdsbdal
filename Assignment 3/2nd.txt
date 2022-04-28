@@ -1,0 +1,50 @@
+#sepallength	sepalwidth     	petallength 	petalwidth     	class
+#Iris-setosa    Iris-versicolor     Iris-virginica
+
+Flower_dict = {'Iris-setosa': [0, 0, 0, 0, 0], 'Iris-versicolor': [0, 0, 0, 0, 0], 'Iris-virginica': [0, 0, 0, 0, 0]}
+
+Total_sepalLength = 0
+Total_petalLength = 0
+Total_sepalWidth = 0
+Total_petalWidth = 0
+Count = 0
+
+for row in data.iterrows():
+    Total_sepalLength += row[1][0]
+    Total_sepalWidth += row[1][1]
+    Total_petalLength += row[1][2]
+    Total_petalWidth += row[1][3]
+    key = row[1][4]
+    Flower_dict[key][0] += row[1][0]
+    Flower_dict[key][1] += row[1][1]
+    Flower_dict[key][2] += row[1][2]
+    Flower_dict[key][3] += row[1][3]
+    Flower_dict[key][4] += 1
+    Count += 1
+
+print("Mean of sepallength = " + str(Total_sepalLength / Count))
+print("Mean of sepalWidth = " + str(Total_sepalWidth / Count))
+print("Mean of petalLength = " + str(Total_petalLength / Count))
+print("Mean of petalWidth = " + str(Total_petalWidth / Count))
+for key in Flower_dict:
+    print("Mean of petalWidth of " + key + " = " + str(Flower_dict[key][0] / Flower_dict[key][4]))
+    print("Mean of sepalWidth of " + key + " = " + str(Flower_dict[key][1] / Flower_dict[key][4]))
+    print("Mean of petalLength of " + key + " = " + str(Flower_dict[key][2] / Flower_dict[key][4]))
+    print("Mean of petalWidth of " + key + " = " + str(Flower_dict[key][3] / Flower_dict[key][4]))
+
+#print(Total_sepalLength, Total_sepalWidth, Total_petalLength, Total_petalWidth, Count)
+for key in Flower_dict:
+    print(Flower_dict[key])
+
+setosa_df = data[data['class'] == 'Iris-setosa']
+versi_df = data[data['class'] == 'Iris-versicolor']
+virginica_df = data[data['class'] == 'Iris-virginica']
+
+def percentile_calc(data_set, colNum, per):
+    size = len(data_set)
+    index = math.floor(per / 100 * size) - 1
+    print(data_set.iloc[index][colNum])
+    print(np.percentile(setosa_df['sepallength'], 25))
+    return
+
+percentile_calc(setosa_df, 0, 25)
